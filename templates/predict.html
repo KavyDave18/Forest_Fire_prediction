@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predict FWI</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .form-container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      animation: fadeIn 1.5s ease-in-out;
+      width: 90%;
+      max-width: 600px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #f5576c;
+    }
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    label {
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    input, select {
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      transition: 0.3s ease;
+    }
+    input:focus, select:focus {
+      border-color: #f5576c;
+      box-shadow: 0 0 8px rgba(245,87,108,0.3);
+    }
+    .btn {
+      grid-column: span 2;
+      padding: 12px;
+      background: #f5576c;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .btn:hover {
+      background: #f093fb;
+      transform: scale(1.05);
+    }
+    .result {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #2575fc;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Predict Fire Weather Index (FWI)</h2>
+    <form id="predictForm" action="{{ url_for('predict') }}" method = "post">
+        <label>Temperature</label><input type="text" name="Temperature" required>
+        <label>RH</label><input type="text" name="RH" required>
+        <label>Ws</label><input type="text" name="Ws" required>
+        <label>Rain</label><input type="text" name="Rain" required>
+        <label>FFMC</label><input type="text" name="FFMC" required>
+        <label>DMC</label><input type="text" name="DMC" required>
+        <label>ISI</label><input type="text" name="ISI" required>
+        <label>Classes</label><input type="text" name="Classes" required>
+        <label>Region</label><input type="text" name="Region" required>
+      <button type="submit" class="btn">Predict</button>
+    </form>
+    <div class="result" id="result">
+      {% if result %}
+        <h2>The FWI prediction is {{ result }}</h2>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
